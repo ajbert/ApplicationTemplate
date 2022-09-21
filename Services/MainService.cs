@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +47,13 @@ public class MainService : IMainService
                 if (LowerCaseMovieTitles.Contains(movieTitle.ToLower()))
                 {
                     Console.WriteLine("That movie has already been entered");
-                   // logger.Info("Duplicate movie title {Title}", movieTitle);
+                   // Logger.Info("Duplicate movie title {Title}", movieTitle);
                 }
                 else
                 {
                     // generate movie id - use max value in MovieIds + 1
                     int movieId = _fileService.movieIds.Max() + 1;
-                    // input genres
+                    // input genres 
                     List<string> genres = new List<string>();
                     string genre;
                     do
@@ -79,7 +80,7 @@ public class MainService : IMainService
                     movieTitle = movieTitle.IndexOf(',') != -1 ? $"\"{movieTitle}\"" : movieTitle;
                     // display movie id, title, genres
                     Console.WriteLine($"{movieId},{movieTitle},{genresString}");
-                    _fileService.Write(999999, "Movie the Movie", "Spoof|Comedy|Action");
+                    _fileService.Write(movieId, movieTitle, genresString);
                 }
             }
             else if (choice == "2")
